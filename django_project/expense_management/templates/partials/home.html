@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Expense Tracker</h1>
+  <form method="get">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="start_date">Start Date</label>
+        <input
+          type="text"
+          class="form-control"
+          id="start_date"
+          name="start_date"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <label for="end_date">End Date</label>
+        <input type="text" class="form-control" id="end_date" name="end_date" />
+      </div>
+      <div class="form-group col-md-4 d-flex align-items-end mt-2">
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for expense in expenses %}
+      <tr>
+        <td>{{ expense.datetime }}</td>
+        <td>{{ expense.category }}</td>
+        <td>{{ expense.title }}</td>
+        <td>{{ expense.description }}</td>
+        <td>{{ expense.amount }}</td>
+        <td>{{ expense.user.get_full_name}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $("#start_date").datepicker({ dateFormat: "yy-mm-dd" });
+    $("#end_date").datepicker({ dateFormat: "yy-mm-dd" });
+  });
+</script>
+
+{% endblock content %}

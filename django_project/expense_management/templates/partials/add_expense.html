@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <h2>Add Expense</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="amount"
+        name="amount"
+        min="0"
+        step="0.01"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category:</label>
+      <select class="form-select" id="category" name="category" required>
+        <option value="">-- Select --</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.category }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="user" class="form-label">User:</label>
+      <select class="form-select" id="user" name="user" required>
+        <option value="">-- Select --</option>
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="datetime" class="form-label">Date Time:</label>
+      <div class="input-group" id="datetimepicker">
+        <input
+          type="text"
+          class="form-control"
+          id="datetime"
+          name="datetime"
+          required
+        />
+        <span class="input-group-text"
+          ><i class="fas fa-calendar-alt"></i
+        ></span>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea
+        class="form-control"
+        id="description"
+        name="description"
+        rows="3"
+      ></textarea>
+    </div>
+    <!-- Add other fields here if needed -->
+    <button type="submit" class="btn btn-primary">Add Expense</button>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function () {
+    const datetimepicker = new tempusDominus.TempusDominus(
+      document.getElementById("datetimepicker"),
+      {
+        display: {
+          components: {
+            useTwentyfourHour: true,
+          },
+          buttons: {
+            today: true,
+            clear: true,
+            close: true,
+          },
+          icons: {
+            time: "fas fa-clock",
+            date: "fas fa-calendar-alt",
+            up: "fas fa-arrow-up",
+            down: "fas fa-arrow-down",
+            previous: "fas fa-chevron-left",
+            next: "fas fa-chevron-right",
+            today: "fas fa-calendar-check",
+            clear: "fas fa-trash",
+            close: "fas fa-times",
+          },
+        },
+        localization: {
+          locale: "en",
+          format: "yyyy-MM-dd HH:mm:ss",
+        },
+      }
+    );
+  });
+</script>
+
+{% endblock content %}
